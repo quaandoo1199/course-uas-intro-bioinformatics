@@ -12,9 +12,23 @@ output=$4
 
 # we call the alignment using $reference, $fastq1 and $fastq2
 # COMPLETE with the alignment command
+<<<<<<< Updated upstream
 bwa-mem2 mem $reference ../day_1/data/reads_1.fastq.gz ../day_1/data/reads_2.fastq.gz | \
     samtools view -uS - | \
     samtools sort - > exercise.bam
 
 # we call the variant calling using $reference and $output
 # COMPLETE with the variant calling command
+=======
+bwa-mem2 mem $reference $fastq1 $fastq2 | \
+    samtools view -uS - | \
+    samtools sort - > $output.bam
+# we call the variant calling using $reference and $output
+# COMPLETE with the variant calling command
+lofreq call  \
+    --ref $reference\
+    --call-indels \
+    <( lofreq indelqual --dindel --ref $reference $output.bam ) | bgzip > $output.vcf.gz
+
+bcftools index $output.vcf.gz
+>>>>>>> Stashed changes
